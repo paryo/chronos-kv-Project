@@ -26,7 +26,12 @@ struct key_value {
 
 };
 
+
+
 #define TABLE_SIZE 10
+
+struct key_value* hash_table[TABLE_SIZE];
+
 
 unsigned int hash_function(const char* key) {
 
@@ -43,7 +48,6 @@ unsigned int hash_function(const char* key) {
 
         value+= key[i];
 
-
     }
 
     // Ensure the index fits inside our table size
@@ -53,14 +57,17 @@ unsigned int hash_function(const char* key) {
 
 }
 
+void init_hash_table() {
 
 
+    for (int k =0 ; k <TABLE_SIZE ; k++) {
+
+        hash_table[k] = NULL;
+
+    }
 
 
-
-
-
-
+}
 
 
 
@@ -68,7 +75,13 @@ unsigned int hash_function(const char* key) {
 
 int main() {
 
-    printf("---Baseline Setup Complete ---\n");
+    init_hash_table();
+
+
+    char test_key[] = "username";
+    unsigned int index = hash_function(test_key);
+
+    printf("The key '%s' maps to index: %u\n", test_key, index);
 
     return 0;
 
