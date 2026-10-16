@@ -26,6 +26,44 @@ struct key_value {
 
 };
 
+#define TABLE_SIZE 10
+
+unsigned int hash_function(const char* key) {
+
+    unsigned long int value = 0;
+
+    unsigned int i =0;
+
+    unsigned key_len = strlen(key);
+
+
+    // Loop through each character of the key
+
+    for (i = 0 ; i <key_len ; i++) {
+
+        value+= key[i];
+
+
+    }
+
+    // Ensure the index fits inside our table size
+
+    return value % TABLE_SIZE;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 int main() {
