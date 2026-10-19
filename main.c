@@ -69,6 +69,33 @@ void init_hash_table() {
 
 }
 
+void set(const char* target_key , const char* target_value) {
+
+    unsigned int slot_index = hash_function(target_key);
+
+    struct key_value* new_node = (struct key_value*)malloc(sizeof(struct key_value));
+
+
+    if (new_node == NULL) {
+
+        printf("[Error] System out of heap memory! Insertion failed.\n");
+
+        return;
+    }
+
+    strcpy(new_node->key ,target_key);
+
+    strcpy(new_node->value ,target_value);
+
+    new_node->next = NULL;
+
+    hash_table[slot_index] = new_node;
+
+    printf("[Success] Stored '%s' at array index: %u\n", target_key, slot_index);
+
+
+}
+
 
 
 
@@ -78,10 +105,20 @@ int main() {
     init_hash_table();
 
 
-    char test_key[] = "username";
-    unsigned int index = hash_function(test_key);
+    printf("--- Initiating Live Data Insertion ---\n");
 
-    printf("The key '%s' maps to index: %u\n", test_key, index);
+
+    set("username", "rahul123");
+
+    unsigned int checked_index = hash_function("username");
+
+    if (hash_table[checked_index] != NULL) {
+        printf("--- Validation Success ---\n");
+        printf("Verified Slot %u holds key: '%s' with payload: '%s'\n",
+               checked_index,
+               hash_table[checked_index]->key,
+               hash_table[checked_index]->value);
+    }
 
     return 0;
 
