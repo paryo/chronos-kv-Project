@@ -97,6 +97,27 @@ void set(const char* target_key , const char* target_value) {
 }
 
 
+const char* get(const char* target_key) {
+
+    unsigned int slot_index = hash_function(target_key);
+
+
+    struct key_value* current = hash_table[slot_index];
+
+
+    if (current == NULL) {
+        return NULL;
+    }
+
+
+    if (strcmp(current->key, target_key) == 0) {
+        return current->value;
+    }
+
+    return NULL;
+}
+
+
 
 
 
@@ -110,14 +131,13 @@ int main() {
 
     set("username", "rahul123");
 
-    unsigned int checked_index = hash_function("username");
+    const char* fetched_value = get("username");
 
-    if (hash_table[checked_index] != NULL) {
-        printf("--- Validation Success ---\n");
-        printf("Verified Slot %u holds key: '%s' with payload: '%s'\n",
-               checked_index,
-               hash_table[checked_index]->key,
-               hash_table[checked_index]->value);
+    if (fetched_value != NULL) {
+        printf("--- GET Success ---\n");
+        printf("Successfully retrieved value for 'username': %s\n", fetched_value);
+    } else {
+        printf("[Error] Key not found in database!\n");
     }
 
     return 0;
