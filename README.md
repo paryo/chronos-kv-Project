@@ -67,12 +67,4 @@ Implements defensive pointer qualifiers (`const char*`) across search and write 
 
 ---
 
-## 🔮 The Next Milestone: Custom 2D Retro Game Engine
 
-Upon the completion of **ChronosKV**, this architecture will transition as the foundational storage core for a **Massive 45-Day Custom 2D Retro Game Engine & Playable RPG from Scratch**. 
-
-The upcoming project will be engineered entirely in Pure C utilizing the low-level **SDL2 (Simple DirectMedia Layer)** hardware interface layer to drive:
-* Hardwired 60 FPS Delta-Time Game Loops & Double-Buffered Visual Matrices.
-* Raw Tilemap Parsers from binary text layouts.
-* Native Axis-Aligned Bounding Box (AABB) physics and collision dynamics.
-* Multi-State Enemy AI finite logic engines.
