@@ -67,4 +67,75 @@ Implements defensive pointer qualifiers (`const char*`) across search and write 
 
 ---
 
+---
+
+## 💻 How ChronosKV Works (Live Terminal Execution)
+
+When the project is fully completed, it compiles into a standalone executable. Running it launches an interactive database command-line shell directly inside your IDE console or terminal.
+
+### 1. Launching the Database Engine
+Upon boot, ChronosKV initializes the system memory arrays, wipes out garbage data, and automatically reloads previous records from the local disk:
+
+```text
+[ChronosKV] Initializing Database Engine...
+[ChronosKV] Sweeping memory slots clean... Done.
+[ChronosKV] Loading persistent data from database.db... Done (3 records loaded).
+
+Welcome to ChronosKV Shell. Type HELP for commands.
+chronos_kv> 
+```
+
+### 2. Live Data Operations (Demo Commands)
+You can store, retrieve, and inspect data entries in real-time. The engine calculates indices under the hood and reports success statuses:
+
+* **Storing Data (`SET`):**
+  ```text
+  chronos_kv> SET username rahul123
+  [Success] Stored 'username' at memory array index: 4
+  ```
+
+* **Retrieving Data (`GET`):**
+  ```text
+  chronos_kv> GET username
+  [Result] rahul123
+  ```
+
+* **Handling Missing Keys:**
+  ```text
+  chronos_kv> GET nonexistent_key
+  [Error] Key not found in the system matrix.
+  ```
+
+### 3. Advanced Diagnostic Inspection (`DUMP`)
+To prove to professors that the hashing logic and collision chaining are working seamlessly, you can execute a memory layout inspect command to see the internal array allocation layout:
+
+```text
+chronos_kv> DUMP
+--- CURRENT HASH TABLE MEMORY MATRIX ---
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: [Key: "username" | Value: "rahul123"] ──▶ [Key: "abc" | Value: "collision_data"] ──▶ NULL
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+Slot: EMPTY (NULL)
+----------------------------------------
+```
+
+### 4. Safe Shutdown & Disk Persistence (`EXIT`)
+When you are done, typing `EXIT` triggers the persistence layer, flushing active RAM chunks into a physical database file before wiping memory records clean to ensure no resource leaks:
+
+```text
+chronos_kv> EXIT
+[ChronosKV] Shutting down database engine safely...
+[ChronosKV] Saving all memory nodes to disk (database.db)... Done.
+[ChronosKV] Freeing allocated heap memory bytes... Clean.
+
+Process finished with exit code 0
+```
+
+
 
